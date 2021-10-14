@@ -17,7 +17,7 @@ var retract=0.5               ; Указать длину ретракта, мм
 
 var babystepping=0.00         ; Указать BabyStepping, мм
 
-var pa_start=0.010            ; Указать шаг изменения коэффициента Pressure Advance
+var pa_start=0.010            ; Указать начальный коэффициент Pressure Advance
 var pa_step=0.005             ; Указать шаг изменения коэффициента Pressure Advance
 var pa_number=10              ; Указать количество тестовых линий
 
