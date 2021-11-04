@@ -51,7 +51,7 @@ M190 S{var.temperature_hotbed}                                          ; Наг
 G28                                                                     ; Калибровка всех осей
 M290 R0 S{var.babystepping}                                             ; Задание BabyStepping 
 
-; ----------------------------------------------------------------------   
+; ------- Прочистка сопла (печать квадрата вокруг тестовых башен) ------
 
 M300 P500                                                               ; Звуковой сигнал
 G90                                                                     ; Выбор абсолютных перемещений
@@ -65,8 +65,6 @@ var filament_lengthX=(var.line_width*var.line_height*var.move_lengthX)/(pi*var.f
 var move_lengthY=var.pa_number*var.step+var.square_offset*2             ; Длина квадрата вдоль Y
 var filament_lengthY=(var.line_width*var.line_height*var.move_lengthY)/(pi*var.filament_diameter*var.filament_diameter/4)*var.extrusion_multiplier
 
-
-; Прочистка сопла (квадрат вокруг тестовых линий)
 M300 P500                                                               ; Звуковой сигнал
 G90                                                                     ; Выбор абсолютных перемещений
 G1 Z{var.line_height}                                                   ; Перемещение на высоту слоя
@@ -83,9 +81,8 @@ G1 Z{var.z_lift}                                                        ; Пер
 var filament_length=(var.line_width*var.line_height*var.length)/(pi*var.filament_diameter*var.filament_diameter/4)*var.extrusion_multiplier
 echo "Одна линия "^(var.line_width*var.line_height*var.length)^" куб.мм филамента, длиной "^var.filament_length^" мм"
 
-; ----------------------------------------------------------------------   
+; ------------- Печать линий тестирования Pressure Advance -------------
 
-;Печать линий тестирования Pressure Advance
 var counter=0
 while var.counter<=var.pa_number
    M572 D0 S{var.pa_start+var.pa_step*var.counter}                      ; Установка коэффициента Pressure Advance
