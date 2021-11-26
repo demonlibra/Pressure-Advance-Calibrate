@@ -7,11 +7,12 @@
 var temperature_hotend=235    ; Указать температуру HotEnd`а, C
 var temperature_hotbed=80     ; Указать температуру стола, C
 
-var pa_start=0.010            ; Указать начальный коэффициент Pressure Advance
-var pa_step=0.005             ; Указать шаг изменения коэффициента Pressure Advance
+var pa_start=0.100            ; Указать начальный коэффициент Pressure Advance
+var pa_step=0.050             ; Указать шаг изменения коэффициента Pressure Advance
 var pa_number=10              ; Указать количество тестовых линий
 
-var start_point=30            ; Указать начальную точку первой тестовой линии (X=Y), мм
+var start_point_X=30          ; Указать начальную точку X первой тестовой линии, мм
+var start_point_Y=50          ; Указать начальную точку Y первой тестовой линии, мм
 var step=5                    ; Указать шаг между тестовыми линиями, мм
 var length=100                ; Указать длину тестовых линий, мм
 var square_offset=5           ; Указать смещение квадрата вокруг тестовых линий (для прочистки сопла), мм
@@ -55,7 +56,7 @@ M290 R0 S{var.babystepping}                                             ; Зад
 
 M300 P500                                                               ; Звуковой сигнал
 G90                                                                     ; Выбор абсолютных перемещений
-G1 X{var.start_point-var.square_offset} Y{var.start_point-var.square_offset} Z{var.z_lift} F{var.travel_speed*60}
+G1 X{var.start_point_X-var.square_offset} Y{var.start_point_Y-var.square_offset} Z{var.z_lift} F{var.travel_speed*60}
 G1 Z0 F{var.slow_speed*60}                                              ; Упираем сопло в стол чтобы пластик не вытекал
 M109 S{var.temperature_hotend}                                          ; Нагрев HotEnd`а с ожиданием достижения температуры
 
@@ -87,7 +88,7 @@ var counter=0
 while var.counter<=var.pa_number
    M572 D0 S{var.pa_start+var.pa_step*var.counter}                      ; Установка коэффициента Pressure Advance
    G90                                                                  ; Выбор абсолютных перемещений
-   G1 X{var.start_point} Y{var.start_point+var.step*var.counter} F{var.travel_speed*60}
+   G1 X{var.start_point_X} Y{var.start_point_Y+var.step*var.counter} F{var.travel_speed*60}
                                                                         ; Печать тестовой линии
    G1 Z{var.line_height}                                                ; Переместить на высоту слоя
    G11                                                                  ; Возврат пластика после ретракта
@@ -110,7 +111,7 @@ M300 P1000                                                              ; Зву
 M107                                                                    ; Выключить вентилятор обдува модели
 G10                                                                     ; Ретракт
 G90                                                                     ; Выбор абсолютных перемещений
-G1 X{var.start_point} Y{var.start_point} Z{var.z_end} F{var.travel_speed*60}    ; Перестить стол и голову в сторону
+G1 X{var.start_point_X} Y{var.start_point_Y} Z{var.z_end} F{var.travel_speed*60}    ; Перестить стол и голову в сторону
 M290 R0 S0                                                              ; Сбросить значение BabyStepping
 M400                                                                    ; Дождаться завершения перемещения
 M18                                                                     ; Выключить питание моторов
